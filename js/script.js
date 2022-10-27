@@ -61,14 +61,18 @@ const posts = [
 ];
 
 
-// variabili
+//variabili
 const container = document.getElementById('container');
 
 //converto le date in formato europeo
 convertData();
 
-// aggiungo i post in pagina
+//aggiungo i post in pagina
 getPosts();
+
+const likesButton = document.getElementsByClassName('js-like-button');
+
+const alreadyLiked = [];
 
 
 
@@ -95,9 +99,9 @@ function getPosts(){
             <img src="${post.media}" alt="${post.image}">
         </div>
         <div class="post__footer">
-            <div class="likes js-likes">
+            <div class="likes js-likes" onclick="checkLike(${post.id})">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <a class="like-button  js-like-button" href="#" data-postid="${post.id}">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
@@ -117,4 +121,10 @@ function convertData(){
     posts.forEach(post => {
         post.created = post.created.split("-").reverse().join("-");
     })
+}
+
+function checkLike(id){
+    posts[id - 1].likes++;
+    getPosts();
+    likesButton[id - 1].classList.add('like-button--liked');
 }

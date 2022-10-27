@@ -67,23 +67,14 @@ const container = document.getElementById('container');
 //converto le date in formato europeo
 convertData();
 
+//verifico se presente una immagine del profilo. Se non e' presente, creo una immagine con le iniziali del proprio nome e cognome
+checkPic();
+
 //aggiungo i post in pagina
 getPosts();
 
-const likesButton = document.getElementsByClassName('js-like-button');
-
-const alreadyLiked = [];
-
-document.querySelectorAll('.js-like-button').forEach(button => {
-    button.addEventListener('click', function(e) {
-        e.preventDefault();
-        let idPost = this.getAttribute('data-postid');
-        const singlePost = posts.filter(post => post.id == idPost)[0];
-        button.closest('.js-likes').querySelector('.js-likes-counter').innerText = ++singlePost.likes;
-        button.classList.add('like-button--liked');
-    });
-});
-
+//aggiungo evento click ai like button
+checkLike();
 
 
 // funzioni
@@ -94,7 +85,7 @@ function getPosts(){
         <div class="post__header">
             <div class="post-meta">                    
                 <div class="post-meta__icon">
-                    <img class="profile-pic" src="${post.author.image}" alt="${post.author}">                    
+                    <img class="profile-pic" src="${post.author.image}" alt="${post.author.image}" onError="this.className='invalidImageSrc'">                    
                 </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${post.author.name}</div>
@@ -129,5 +120,24 @@ function getPosts(){
 function convertData(){
     posts.forEach(post => {
         post.created = post.created.split("-").reverse().join("-");
+    })
+}
+
+function checkLike(){
+    document.querySelectorAll('.js-like-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            let idPost = this.getAttribute('data-postid');             const singlePost = posts.filter(post => post.id == idPost)[0];             button.closest('.js-likes').querySelector('.js-likes-counter').innerText = ++singlePost.likes;
+            button.classList.add('like-button--liked');
+        },{once: true});
+    });
+}
+
+function checkPic(){
+    posts.forEach(pic => {
+        if(pic.author.image === null){
+            pic.author.image = pic.author.name.replace(/[a-z]/g, '');
+            //console.log(pic.author.image);
+        }
     })
 }

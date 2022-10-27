@@ -18,6 +18,16 @@ h1 {
     color: white;
 }
 
+.invalidImageSrc{
+    font-weight: bold;
+    color: #023047;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: bisque;
+    padding: 10px;
+    border-radius: 20px;
+}
+
 .main-title {
     text-align: center;
     margin: 24px 0;
@@ -78,13 +88,6 @@ h1 {
     width: 60px;
     overflow: hidden;
     border-radius: 50%;
-}
-
-.profile-pic-default span {
-    font-weight: bold;
-    color: #023047;
-    font-size: 1.2rem;
-    text-transform: uppercase;
 }
 
 .post__text {

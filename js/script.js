@@ -127,9 +127,16 @@ function checkLike(){
     document.querySelectorAll('.js-like-button').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            let idPost = this.getAttribute('data-postid');             const singlePost = posts.filter(post => post.id == idPost)[0];             button.closest('.js-likes').querySelector('.js-likes-counter').innerText = ++singlePost.likes;
-            button.classList.add('like-button--liked');
-        },{once: true});
+            let idPost = this.getAttribute('data-postid');             
+            const singlePost = posts.filter(post => post.id == idPost)[0];
+            if(button.classList.contains('like-button--liked')){
+                button.closest('.js-likes').querySelector('.js-likes-counter').innerText = --singlePost.likes;
+                button.classList.remove('like-button--liked');
+            }else{
+                button.closest('.js-likes').querySelector('.js-likes-counter').innerText = ++singlePost.likes;
+                button.classList.add('like-button--liked');
+            }
+        });
     });
 }
 
@@ -137,7 +144,6 @@ function checkPic(){
     posts.forEach(pic => {
         if(pic.author.image === null){
             pic.author.image = pic.author.name.replace(/[a-z]/g, '');
-            //console.log(pic.author.image);
         }
     })
 }

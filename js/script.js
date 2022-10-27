@@ -74,7 +74,14 @@ const likesButton = document.getElementsByClassName('js-like-button');
 
 const alreadyLiked = [];
 
-
+document.querySelectorAll('.js-like-button').forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        let idPost = this.getAttribute('data-postid');
+        const singlePost = posts.filter(post => post.id == idPost)[0];
+        button.closest('.js-likes').querySelector('.js-likes-counter').innerText = ++singlePost.likes;
+    });
+});
 
 
 
@@ -99,7 +106,7 @@ function getPosts(){
             <img src="${post.media}" alt="${post.image}">
         </div>
         <div class="post__footer">
-            <div class="likes js-likes" onclick="checkLike(${post.id})">
+            <div class="likes js-likes">
                 <div class="likes__cta">
                     <a class="like-button  js-like-button" href="#" data-postid="${post.id}">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
@@ -117,14 +124,9 @@ function getPosts(){
     container.innerHTML = content;
 }
 
+
 function convertData(){
     posts.forEach(post => {
         post.created = post.created.split("-").reverse().join("-");
     })
-}
-
-function checkLike(id){
-    posts[id - 1].likes++;
-    getPosts();
-    likesButton[id - 1].classList.add('like-button--liked');
 }

@@ -80,6 +80,7 @@ document.querySelectorAll('.js-like-button').forEach(button => {
         let idPost = this.getAttribute('data-postid');
         const singlePost = posts.filter(post => post.id == idPost)[0];
         button.closest('.js-likes').querySelector('.js-likes-counter').innerText = ++singlePost.likes;
+        button.classList.add('like-button--liked');
     });
 });
 
